@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Propositional Logic Tutorial</title>
+    <title>Propositional Logic for Visual Learners</title>
     <style>
         * {
             margin: 0;
@@ -12,56 +12,190 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            color: #333;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
+            padding: 20px;
         }
 
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 2rem;
             text-align: center;
+            color: white;
+            margin-bottom: 30px;
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
         }
 
-        .content {
-            padding: 2rem;
+        .section h2 {
+            color: #5a67d8;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #e2e8f0;
+            padding-bottom: 10px;
         }
 
-        .progress-container {
-            margin-bottom: 2rem;
+        .proposition {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
-        .progress-info {
+        .proposition.true {
+            background: linear-gradient(45deg, #48bb78, #68d391);
+            color: white;
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
+        }
+
+        .proposition.false {
+            background: linear-gradient(45deg, #f56565, #fc8181);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 101, 101, 0.4);
+        }
+
+        .proposition.neutral {
+            background: linear-gradient(45deg, #a0aec0, #cbd5e0);
+            color: #2d3748;
+        }
+
+        .proposition:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .logic-gate {
             display: flex;
-            justify-content: between;
             align-items: center;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: #666;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .connector {
+            font-size: 1.5em;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #805ad5, #9f7aea);
+            color: white;
+            box-shadow: 0 4px 15px rgba(128, 90, 213, 0.3);
+        }
+
+        .result {
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: center;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-panel {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            border: 2px dashed #cbd5e0;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .truth-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .truth-table th, .truth-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .truth-table th {
+            background: linear-gradient(45deg, #5a67d8, #667eea);
+            color: white;
+            font-weight: bold;
+        }
+
+        .truth-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .truth-table tr:hover {
+            background: #e2e8f0;
+            transform: scale(1.02);
+            transition: all 0.2s ease;
+        }
+
+        .visual-example {
+            background: linear-gradient(135deg, #fff5f5, #fed7d7);
+            border-left: 5px solid #f56565;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #4299e1, #63b3ed);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(66, 153, 225, 0.4);
+        }
+
+        .playground {
+            background: linear-gradient(135deg, #f0fff4, #c6f6d5);
+            border: 2px solid #48bb78;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         .progress-bar {
@@ -70,673 +204,263 @@
             background: #e2e8f0;
             border-radius: 4px;
             overflow: hidden;
+            margin: 20px 0;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-            transition: width 0.3s ease;
-            border-radius: 4px;
-        }
-
-        .section-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .section-btn {
-            padding: 0.75rem 1rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .section-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .section-btn.completed {
-            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
-            color: white;
-        }
-
-        .section-btn:not(.active):not(.completed) {
-            background: #f1f5f9;
-            color: #64748b;
-        }
-
-        .section-btn:hover:not(.active) {
-            background: #e2e8f0;
-            transform: translateY(-1px);
-        }
-
-        .section-content {
-            background: white;
-            border-radius: 15px;
-            border: 1px solid #e2e8f0;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .icon {
-            width: 1.5rem;
-            height: 1.5rem;
-            fill: currentColor;
-        }
-
-        .card {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-left: 4px solid #3b82f6;
-        }
-
-        .card.purple { border-left-color: #8b5cf6; background: #faf5ff; }
-        .card.green { border-left-color: #10b981; background: #f0fdf4; }
-        .card.orange { border-left-color: #f59e0b; background: #fffbeb; }
-        .card.blue { border-left-color: #3b82f6; background: #eff6ff; }
-        .card.yellow { border-left-color: #eab308; background: #fefce8; }
-        .card.red { border-left-color: #ef4444; background: #fef2f2; }
-
-        .card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: #1e293b;
-        }
-
-        .operator-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .truth-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .truth-table th,
-        .truth-table td {
-            border: 1px solid #e2e8f0;
-            padding: 0.75rem;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .truth-table th {
-            background: #f8fafc;
-            font-weight: 600;
-            color: #475569;
-        }
-
-        .truth-table tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        .quiz-card {
-            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border: 1px solid #b3e5fc;
-        }
-
-        .quiz-question {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #0f172a;
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .quiz-option {
-            padding: 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .quiz-option:hover {
-            border-color: #3b82f6;
-            transform: translateX(5px);
-        }
-
-        .quiz-option.selected {
-            border-color: #3b82f6;
-            background: #eff6ff;
-        }
-
-        .quiz-option.correct {
-            border-color: #10b981;
-            background: #f0fdf4;
-            color: #065f46;
-        }
-
-        .quiz-option.incorrect {
-            border-color: #ef4444;
-            background: #fef2f2;
-            color: #991b1b;
-        }
-
-        .feedback {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 10px;
-            background: #fef3c7;
-            border: 1px solid #f59e0b;
-            color: #92400e;
-            display: none;
-        }
-
-        .feedback.show {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-
-        .truth-table-builder {
-            background: #f8fafc;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border: 1px solid #e2e8f0;
-        }
-
-        .builder-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #1e293b;
-        }
-
-        .builder-select {
-            padding: 0.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            background: white;
-        }
-
-        .success-message {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            border: 1px solid #10b981;
-            color: #065f46;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        .success-message.show {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            animation: slideIn 0.3s ease;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 2rem;
-        }
-
-        .nav-btn {
-            padding: 1rem 1.5rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .nav-btn.prev {
-            background: #f1f5f9;
-            color: #475569;
-        }
-
-        .nav-btn.prev:hover:not(:disabled) {
-            background: #e2e8f0;
-            transform: translateX(-3px);
-        }
-
-        .nav-btn.next {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-        }
-
-        .nav-btn.next:hover:not(:disabled) {
-            transform: translateX(3px);
-            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
-        }
-
-        .completion-card {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            border: 1px solid #10b981;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            display: none;
-        }
-
-        .completion-card.show {
-            display: block;
-            animation: slideIn 0.5s ease;
-        }
-
-        .completion-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #065f46;
-            margin-bottom: 0.5rem;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .content {
-                padding: 1rem;
-            }
-            
-            .section-content {
-                padding: 1.5rem;
-            }
-            
-            .operator-grid {
-                grid-template-columns: 1fr;
-            }
+            background: linear-gradient(45deg, #48bb78, #68d391);
+            width: 0%;
+            transition: width 0.5s ease;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Interactive Propositional Logic Tutorial</h1>
-            <p>Learn the fundamentals of logical reasoning step by step</p>
+            <h1>🧠 Propositional Logic for Visual Minds</h1>
+            <p>Learn logic through colors, patterns, and interactive examples!</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
         </div>
 
-        <div class="content">
-            <!-- Progress Bar -->
-            <div class="progress-container">
-                <div class="progress-info">
-                    <span>Progress</span>
-                    <span id="progress-text">1 of 5</span>
+        <div class="section">
+            <h2>🎯 What are Propositions?</h2>
+            <p>Think of propositions as <strong>statements that can be either TRUE or FALSE</strong> - like colored boxes that are either lit up (true) or dark (false).</p>
+            
+            <div class="visual-example">
+                <strong>Try clicking these propositions to see them change:</strong>
+                <div style="margin-top: 15px;">
+                    <div class="proposition true" onclick="toggleProposition(this)">The sky is blue</div>
+                    <div class="proposition false" onclick="toggleProposition(this)">Cats can fly</div>
+                    <div class="proposition true" onclick="toggleProposition(this)">2 + 2 = 4</div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
+                <p style="margin-top: 15px;"><em>Green = True, Red = False. Click to toggle!</em></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔗 Connecting Ideas: AND Logic</h2>
+            <p>AND is like a picky friend - <strong>BOTH things must be true</strong> for the result to be true.</p>
+            
+            <div class="interactive-panel">
+                <div class="logic-gate">
+                    <div class="proposition true" id="and-p" onclick="toggleProposition(this)">I have money</div>
+                    <div class="connector">AND</div>
+                    <div class="proposition true" id="and-q" onclick="toggleProposition(this)">Store is open</div>
+                    <div class="connector">=</div>
+                    <div class="result true" id="and-result">I can buy something</div>
                 </div>
+                <p style="text-align: center; margin-top: 15px;"><em>Click the propositions to see how AND works!</em></p>
             </div>
 
-            <!-- Section Navigation -->
-            <div class="section-nav">
-                <button class="section-btn active" data-section="0">📚 Introduction</button>
-                <button class="section-btn" data-section="1">🔧 Operators</button>
-                <button class="section-btn" data-section="2">📊 Truth Tables</button>
-                <button class="section-btn" data-section="3">🧮 Complex Expressions</button>
-                <button class="section-btn" data-section="4">⚡ Equivalences</button>
+            <table class="truth-table">
+                <tr><th>Money</th><th>Store Open</th><th>Can Buy</th></tr>
+                <tr><td>✅ True</td><td>✅ True</td><td style="background: #c6f6d5;">✅ True</td></tr>
+                <tr><td>✅ True</td><td>❌ False</td><td style="background: #fed7d7;">❌ False</td></tr>
+                <tr><td>❌ False</td><td>✅ True</td><td style="background: #fed7d7;">❌ False</td></tr>
+                <tr><td>❌ False</td><td>❌ False</td><td style="background: #fed7d7;">❌ False</td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🌟 Either Way Works: OR Logic</h2>
+            <p>OR is like a flexible friend - <strong>just ONE thing needs to be true</strong> for the result to be true.</p>
+            
+            <div class="interactive-panel">
+                <div class="logic-gate">
+                    <div class="proposition false" id="or-p" onclick="toggleProposition(this)">It's sunny</div>
+                    <div class="connector">OR</div>
+                    <div class="proposition true" id="or-q" onclick="toggleProposition(this)">I have an umbrella</div>
+                    <div class="connector">=</div>
+                    <div class="result true" id="or-result">I'll go outside</div>
+                </div>
+                <p style="text-align: center; margin-top: 15px;"><em>Try different combinations!</em></p>
             </div>
 
-            <!-- Section Content Container -->
-            <div id="section-container">
-                <!-- Section 0: Introduction -->
-                <div class="section-content" data-section="0">
-                    <div class="section-title">
-                        <span>📚</span>
-                        <h2>Introduction to Propositional Logic</h2>
-                    </div>
-                    
-                    <p>Propositional logic is the foundation of logical reasoning. It deals with propositions (statements that are either true or false) and how they can be combined using logical operators.</p>
-                    
-                    <div class="card blue">
-                        <h3>What is a Proposition?</h3>
-                        <p>A proposition is a declarative sentence that is either true or false, but not both.</p>
-                        
-                        <div style="margin-top: 1rem;">
-                            <p><strong>Examples of propositions:</strong></p>
-                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                                <li>"It is raining" (P)</li>
-                                <li>"2 + 2 = 4" (Q)</li>
-                                <li>"The sky is blue" (R)</li>
-                            </ul>
-                        </div>
-                    </div>
+            <table class="truth-table">
+                <tr><th>Sunny</th><th>Have Umbrella</th><th>Go Outside</th></tr>
+                <tr><td>✅ True</td><td>✅ True</td><td style="background: #c6f6d5;">✅ True</td></tr>
+                <tr><td>✅ True</td><td>❌ False</td><td style="background: #c6f6d5;">✅ True</td></tr>
+                <tr><td>❌ False</td><td>✅ True</td><td style="background: #c6f6d5;">✅ True</td></tr>
+                <tr><td>❌ False</td><td>❌ False</td><td style="background: #fed7d7;">❌ False</td></tr>
+            </table>
+        </div>
 
-                    <div class="quiz-card">
-                        <div class="quiz-question">Which of the following is a valid proposition?</div>
-                        <div class="quiz-options">
-                            <div class="quiz-option" data-quiz="intro-1" data-answer="0">What time is it?</div>
-                            <div class="quiz-option" data-quiz="intro-1" data-answer="1">Close the door!</div>
-                            <div class="quiz-option" data-quiz="intro-1" data-answer="2">The Earth is round</div>
-                            <div class="quiz-option" data-quiz="intro-1" data-answer="3">x + 5 = 10</div>
-                        </div>
-                        <div class="feedback" id="feedback-intro-1">
-                            A proposition must be a declarative statement that can be evaluated as true or false. 'The Earth is round' is a statement that can be verified as true or false.
-                        </div>
-                    </div>
+        <div class="section">
+            <h2>🔄 Flip It: NOT Logic</h2>
+            <p>NOT is like a mirror - it <strong>flips true to false and false to true</strong>.</p>
+            
+            <div class="interactive-panel">
+                <div class="logic-gate">
+                    <div class="connector">NOT</div>
+                    <div class="proposition true" id="not-p" onclick="toggleProposition(this)">It's raining</div>
+                    <div class="connector">=</div>
+                    <div class="result false" id="not-result">It's NOT raining</div>
                 </div>
+                <p style="text-align: center; margin-top: 15px;"><em>Watch how NOT flips the color!</em></p>
+            </div>
+        </div>
 
-                <!-- Section 1: Logical Operators -->
-                <div class="section-content" data-section="1" style="display: none;">
-                    <div class="section-title">
-                        <span>🔧</span>
-                        <h2>Logical Operators</h2>
-                    </div>
-                    
-                    <p>Logical operators allow us to combine propositions to create more complex statements. Here are the fundamental operators:</p>
-
-                    <div class="operator-grid">
-                        <div class="card purple">
-                            <h3>Negation (¬)</h3>
-                            <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Symbol: ¬P or NOT P</p>
-                            <p>Flips the truth value. If P is true, ¬P is false.</p>
-                            <div style="margin-top: 0.75rem; font-size: 0.9rem;">
-                                <strong>Example:</strong> If P = "It's sunny", then ¬P = "It's not sunny"
-                            </div>
-                        </div>
-
-                        <div class="card green">
-                            <h3>Conjunction (∧)</h3>
-                            <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Symbol: P ∧ Q or P AND Q</p>
-                            <p>True only when both propositions are true.</p>
-                            <div style="margin-top: 0.75rem; font-size: 0.9rem;">
-                                <strong>Example:</strong> "It's sunny AND warm"
-                            </div>
-                        </div>
-
-                        <div class="card orange">
-                            <h3>Disjunction (∨)</h3>
-                            <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Symbol: P ∨ Q or P OR Q</p>
-                            <p>True when at least one proposition is true.</p>
-                            <div style="margin-top: 0.75rem; font-size: 0.9rem;">
-                                <strong>Example:</strong> "It's sunny OR cloudy"
-                            </div>
-                        </div>
-
-                        <div class="card blue">
-                            <h3>Implication (→)</h3>
-                            <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Symbol: P → Q or P IMPLIES Q</p>
-                            <p>False only when P is true and Q is false.</p>
-                            <div style="margin-top: 0.75rem; font-size: 0.9rem;">
-                                <strong>Example:</strong> "If it rains, then the ground is wet"
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="quiz-card">
-                        <div class="quiz-question">What is the truth value of (True ∧ False) ∨ True?</div>
-                        <div class="quiz-options">
-                            <div class="quiz-option" data-quiz="operators-1" data-answer="0">True</div>
-                            <div class="quiz-option" data-quiz="operators-1" data-answer="1">False</div>
-                            <div class="quiz-option" data-quiz="operators-1" data-answer="2">Cannot be determined</div>
-                            <div class="quiz-option" data-quiz="operators-1" data-answer="3">Neither true nor false</div>
-                        </div>
-                        <div class="feedback" id="feedback-operators-1">
-                            First evaluate (True ∧ False) = False. Then False ∨ True = True. Remember that disjunction (OR) is true when at least one operand is true.
-                        </div>
-                    </div>
+        <div class="section">
+            <h2>🎮 Logic Playground</h2>
+            <div class="playground">
+                <p><strong>Create your own logic statement!</strong></p>
+                <div style="margin: 20px 0;">
+                    <button class="button" onclick="addProposition()">Add Proposition</button>
+                    <button class="button" onclick="addConnector('AND')">Add AND</button>
+                    <button class="button" onclick="addConnector('OR')">Add OR</button>
+                    <button class="button" onclick="addConnector('NOT')">Add NOT</button>
+                    <button class="button" onclick="clearPlayground()">Clear</button>
                 </div>
-
-                <!-- Section 2: Truth Tables -->
-                <div class="section-content" data-section="2" style="display: none;">
-                    <div class="section-title">
-                        <span>📊</span>
-                        <h2>Truth Tables</h2>
-                    </div>
-                    
-                    <p>Truth tables show all possible truth value combinations for logical expressions. They're essential for understanding how logical operators work.</p>
-
-                    <div class="card">
-                        <h3>Basic Truth Tables</h3>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem;">
-                            <div>
-                                <h4 style="margin-bottom: 0.5rem;">Conjunction (P ∧ Q)</h4>
-                                <table class="truth-table">
-                                    <thead>
-                                        <tr>
-                                            <th>P</th>
-                                            <th>Q</th>
-                                            <th>P ∧ Q</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>T</td><td>T</td><td>T</td></tr>
-                                        <tr><td>T</td><td>F</td><td>F</td></tr>
-                                        <tr><td>F</td><td>T</td><td>F</td></tr>
-                                        <tr><td>F</td><td>F</td><td>F</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div>
-                                <h4 style="margin-bottom: 0.5rem;">Disjunction (P ∨ Q)</h4>
-                                <table class="truth-table">
-                                    <thead>
-                                        <tr>
-                                            <th>P</th>
-                                            <th>Q</th>
-                                            <th>P ∨ Q</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>T</td><td>T</td><td>T</td></tr>
-                                        <tr><td>T</td><td>F</td><td>T</td></tr>
-                                        <tr><td>F</td><td>T</td><td>T</td></tr>
-                                        <tr><td>F</td><td>F</td><td>F</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="truth-table-builder">
-                        <div class="builder-title">Build the Truth Table for: P ∧ ¬Q</div>
-                        <table class="truth-table">
-                            <thead>
-                                <tr>
-                                    <th>P</th>
-                                    <th>Q</th>
-                                    <th>P ∧ ¬Q</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>T</td>
-                                    <td>T</td>
-                                    <td>
-                                        <select class="builder-select" data-row="0" data-builder="simple">
-                                            <option value="">-</option>
-                                            <option value="true">T</option>
-                                            <option value="false">F</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>T</td>
-                                    <td>F</td>
-                                    <td>
-                                        <select class="builder-select" data-row="1" data-builder="simple">
-                                            <option value="">-</option>
-                                            <option value="true">T</option>
-                                            <option value="false">F</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>F</td>
-                                    <td>T</td>
-                                    <td>
-                                        <select class="builder-select" data-row="2" data-builder="simple">
-                                            <option value="">-</option>
-                                            <option value="true">T</option>
-                                            <option value="false">F</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>F</td>
-                                    <td>F</td>
-                                    <td>
-                                        <select class="builder-select" data-row="3" data-builder="simple">
-                                            <option value="">-</option>
-                                            <option value="true">T</option>
-                                            <option value="false">F</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="success-message" id="success-simple">
-                            ✅ Correct! Well done!
-                        </div>
-                    </div>
-
-                    <div class="quiz-card">
-                        <div class="quiz-question">In the implication P → Q, when is the statement false?</div>
-                        <div class="quiz-options">
-                            <div class="quiz-option" data-quiz="truth-table-1" data-answer="0">When P is false and Q is false</div>
-                            <div class="quiz-option" data-quiz="truth-table-1" data-answer="1">When P is true and Q is false</div>
-                            <div class="quiz-option" data-quiz="truth-table-1" data-answer="2">When P is false and Q is true</div>
-                            <div class="quiz-option" data-quiz="truth-table-1" data-answer="3">When P is true and Q is true</div>
-                        </div>
-                        <div class="feedback" id="feedback-truth-table-1">
-                            An implication P → Q is false only when the premise (P) is true but the conclusion (Q) is false. In all other cases, the implication is considered true.
-                        </div>
-                    </div>
+                <div id="playground-area" class="logic-gate" style="min-height: 60px; border: 2px dashed #48bb78; border-radius: 10px; padding: 20px;">
+                    <p style="color: #666; font-style: italic;">Click buttons above to build your logic statement!</p>
                 </div>
+                <div id="playground-result" class="result neutral" style="display: none;"></div>
+            </div>
+        </div>
 
-                <!-- Section 3: Complex Expressions -->
-                <div class="section-content" data-section="3" style="display: none;">
-                    <div class="section-title">
-                        <span>🧮</span>
-                        <h2>Complex Expressions</h2>
-                    </div>
-                    
-                    <p>Now let's work with more complex logical expressions that combine multiple operators. Remember to follow the order of operations: negation first, then conjunction and disjunction, then implication.</p>
-
-                    <div class="card yellow">
-                        <h3>Order of Operations</h3>
-                        <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>Negation (¬)</li>
-                            <li>Conjunction (∧) and Disjunction (∨)</li>
-                            <li>Implication (→) and Biconditional (↔)</li>
-                        </ol>
-                        <p style="margin-top: 0.75rem; font-size: 0.9rem;">Use parentheses to override the default order when needed.</p>
-                    </div>
-
-                    <div class="card green">
-                        <h3>Example: (P ∧ Q) → (R ∨ ¬S)</h3>
-                        <p>This reads: "If P and Q are both true, then either R is true or S is false"</p>
-                    </div>
-
-                    <div class="quiz-card">
-                        <div class="quiz-question">What is the truth value of ¬(P ∧ Q) when P is true and Q is false?</div>
-                        <div class="quiz-options">
-                            <div class="quiz-option" data-quiz="complex-1" data-answer="0">True</div>
-                            <div class="quiz-option" data-quiz="complex-1" data-answer="1">False</div>
-                            <div class="quiz-option" data-quiz="complex-1" data-answer="2">Cannot be determined</div>
-                            <div class="quiz-option" data-quiz="complex-1" data-answer="3">Depends on other variables</div>
-                        </div>
-                        <div class="feedback" id="feedback-complex-1">
-                            First evaluate P ∧ Q = True ∧ False = False. Then ¬(False) = True. The negation of a false statement is true.
-                        </div>
-                    </div>
-
-                    <div class="quiz-card">
-                        <div class="quiz-question">Which expression is equivalent to ¬(P ∨ Q)?</div>
-                        <div class="quiz-options">
-                            <div class="quiz-option" data-quiz="complex-2" data-answer="0">¬P ∨ ¬Q</div>
-                            <div class="quiz-option" data-quiz="complex-2" data-answer="1">¬P ∧ ¬Q</div>
-                            <div class="quiz-option" data-quiz="complex-2" data-answer="2">P ∧ Q</div>
-                            <div class="quiz-option" data-quiz="complex-2" data-answer="3">P ∨ Q</div>
-                        </div>
-                        <div class="feedback" id="feedback-complex-2">
-                            This is De Morgan's Law: ¬(P ∨ Q) ≡ ¬P ∧ ¬Q. The negation of a disjunction equals the conjunction of the negations.
-                        </div>
-                    </div>
+        <div class="section">
+            <h2>🏆 Quick Quiz</h2>
+            <div id="quiz-area">
+                <div class="visual-example">
+                    <p><strong>Question 1:</strong> If "I study hard" is TRUE and "I get good grades" is TRUE, what is "I study hard AND I get good grades"?</p>
+                    <button class="button" onclick="checkAnswer(1, true)">TRUE</button>
+                    <button class="button" onclick="checkAnswer(1, false)">FALSE</button>
+                    <div id="answer-1" style="margin-top: 10px; display: none;"></div>
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <!-- Section 4: Logical Equivalences -->
-                <div class="section-content" data-section="4" style="display: none;">
-                    <div class="section-title">
-                        <span>⚡</span>
-                        <h2>Logical Equivalences</h2>
-                    </div>
-                    
-                    <p>Logical equivalences are pairs of expressions that always have the same truth value. These are fundamental rules that help us simplify and manipulate logical expressions.</p>
+    <script>
+        let playgroundElements = [];
+        let quizScore = 0;
 
-                    <div class="operator-grid">
-                        <div class="card blue">
-                            <h3>De Morgan's Laws</h3>
-                            <ul style="margin-left: 1rem; font-size: 0.9rem;">
-                                <li>¬(P ∧ Q) ≡ ¬P ∨ ¬Q</li>
-                                <li>¬(P ∨ Q) ≡ ¬P ∧ ¬Q</li>
-                            </ul>
-                        </div>
+        function toggleProposition(element) {
+            if (element.classList.contains('true')) {
+                element.classList.remove('true');
+                element.classList.add('false');
+            } else {
+                element.classList.remove('false');
+                element.classList.add('true');
+            }
+            
+            updateLogicResults();
+            updateProgress();
+        }
 
-                        <div class="card green">
-                            <h3>Distributive Laws</h3>
-                            <ul style="margin-left: 1rem; font-size: 0.9rem;">
-                                <li>P ∧ (Q ∨ R) ≡ (P ∧ Q) ∨ (P ∧ R)</li>
-                                <li>P ∨
+        function updateLogicResults() {
+            // Update AND logic
+            const andP = document.getElementById('and-p');
+            const andQ = document.getElementById('and-q');
+            const andResult = document.getElementById('and-result');
+            
+            if (andP && andQ && andResult) {
+                const pTrue = andP.classList.contains('true');
+                const qTrue = andQ.classList.contains('true');
+                const result = pTrue && qTrue;
+                
+                andResult.classList.remove('true', 'false');
+                andResult.classList.add(result ? 'true' : 'false');
+                andResult.textContent = result ? 'I can buy something' : 'I cannot buy something';
+            }
+
+            // Update OR logic
+            const orP = document.getElementById('or-p');
+            const orQ = document.getElementById('or-q');
+            const orResult = document.getElementById('or-result');
+            
+            if (orP && orQ && orResult) {
+                const pTrue = orP.classList.contains('true');
+                const qTrue = orQ.classList.contains('true');
+                const result = pTrue || qTrue;
+                
+                orResult.classList.remove('true', 'false');
+                orResult.classList.add(result ? 'true' : 'false');
+                orResult.textContent = result ? "I'll go outside" : "I'll stay inside";
+            }
+
+            // Update NOT logic
+            const notP = document.getElementById('not-p');
+            const notResult = document.getElementById('not-result');
+            
+            if (notP && notResult) {
+                const pTrue = notP.classList.contains('true');
+                const result = !pTrue;
+                
+                notResult.classList.remove('true', 'false');
+                notResult.classList.add(result ? 'true' : 'false');
+                notResult.textContent = result ? "It's NOT raining" : "It IS raining";
+            }
+        }
+
+        function addProposition() {
+            const playground = document.getElementById('playground-area');
+            const prop = document.createElement('div');
+            prop.className = 'proposition neutral';
+            prop.textContent = `Statement ${playgroundElements.length + 1}`;
+            prop.onclick = function() { toggleProposition(this); };
+            
+            playgroundElements.push(prop);
+            updatePlaygroundDisplay();
+        }
+
+        function addConnector(type) {
+            if (playgroundElements.length === 0 && type !== 'NOT') return;
+            
+            const connector = document.createElement('div');
+            connector.className = 'connector';
+            connector.textContent = type;
+            
+            playgroundElements.push(connector);
+            updatePlaygroundDisplay();
+        }
+
+        function updatePlaygroundDisplay() {
+            const playground = document.getElementById('playground-area');
+            playground.innerHTML = '';
+            
+            if (playgroundElements.length === 0) {
+                playground.innerHTML = '<p style="color: #666; font-style: italic;">Click buttons above to build your logic statement!</p>';
+                return;
+            }
+            
+            playgroundElements.forEach(element => {
+                playground.appendChild(element.cloneNode(true));
+            });
+        }
+
+        function clearPlayground() {
+            playgroundElements = [];
+            updatePlaygroundDisplay();
+            document.getElementById('playground-result').style.display = 'none';
+        }
+
+        function checkAnswer(questionNum, answer) {
+            const answerDiv = document.getElementById(`answer-${questionNum}`);
+            answerDiv.style.display = 'block';
+            
+            if (questionNum === 1 && answer === true) {
+                answerDiv.innerHTML = '<p style="color: #48bb78; font-weight: bold;">🎉 Correct! When both parts of an AND statement are true, the whole thing is true!</p>';
+                quizScore++;
+            } else {
+                answerDiv.innerHTML = '<p style="color: #f56565; font-weight: bold;">❌ Not quite. Remember: AND needs BOTH parts to be true!</p>';
+            }
+            
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const interactions = document.querySelectorAll('.proposition.true, .proposition.false').length;
+            const progress = Math.min((interactions / 10) * 100, 100);
+            progressFill.style.width = progress + '%';
+        }
+
+        // Initialize the tutorial
+        updateLogicResults();
+    </script>
+</body>
+</html>
