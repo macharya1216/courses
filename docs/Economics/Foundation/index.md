@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Economics"
+title: "Foundation"
 permalink: /Foundation/
 ---
 <p><a href="../index.html">← Back to Economics</a></p>
