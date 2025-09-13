@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Foundation"
-permalink: /Foundation/
+permalink: Economics/Foundation/
 ---
 <p><a href="../index.html">← Back to Economics</a></p>
 
